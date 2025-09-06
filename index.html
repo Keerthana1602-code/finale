@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spam Detection Form</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .container {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    width: 350px;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  input[type="text"], textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    resize: vertical;
+  }
+  button {
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0056b3;
+  }
+  .message {
+    margin-top: 15px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .spam {
+    color: #d93025;
+  }
+  .not-spam {
+    color: #188038;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Spam Detection</h2>
+  <form id="spamForm">
+    <label for="username">Name:</label>
+    <input type="text" id="username" placeholder="Enter your name" required />
+
+    <label for="message">Message:</label>
+    <textarea id="message" rows="5" placeholder="Enter your message" required></textarea>
+
+    <button type="submit">Check Message</button>
+  </form>
+
+  <div id="result" class="message"></div>
+</div>
+
+<script>
+  const spamKeywords = [
+    "free",
+    "money",
+    "winner",
+    "cash",
+    "prize",
+    "click here",
+    "subscribe",
+    "buy now",
+    "urgent",
+    "offer",
+    "credit",
+    "loan"
+  ];
+
+  document.getElementById("spamForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const message = document.getElementById("message").value.toLowerCase();
+    const resultDiv = document.getElementById("result");
+
+    let isSpam = false;
+    for (let keyword of spamKeywords) {
+      if (message.includes(keyword)) {
+        isSpam = true;
+        break;
+      }
+    }
+
+    if (isSpam) {
+      resultDiv.textContent = "⚠️ This message looks like spam!";
+      resultDiv.className = "message spam";
+    } else {
+      resultDiv.textContent = "✅ This message seems okay.";
+      resultDiv.className = "message not-spam";
+    }
+  });
+</script>
+
+</body>
+</html>
